@@ -1,0 +1,28 @@
+# Secret stuff
+.env
+.env.*
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+*.so
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+venv/
+
+# Project tools
+.pytest_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+
+# Editor/OS
+.DS_Store
+*.swp
+.idea/
+.vscode/
