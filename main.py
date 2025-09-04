@@ -1,7 +1,7 @@
 import os
 import sys
 from google import genai
-from google.genai import types
+from google.genai import types # type: ignore
 from dotenv import load_dotenv # type: ignore
 
 def main():
@@ -9,9 +9,9 @@ def main():
 
     args = sys.argv[1:]
     if not args:
-        print("""Error: Please provide a prompt for the ai agent.
-Usage: main.py "Tell me a joke about cats."
-Include an optional --verbose tag for further response data. ex.: main.py "Prompt here" --verbose""")
+        print("Error: Please provide a prompt for the ai agent.")
+        print('Usage: python main.py "<prompt>" --verbose (optional verbose flag)')
+        print('Example: python main.py "Tell me a fact about beavers" --verbose')
         sys.exit(1)
     user_prompt = sys.argv[1]
     messages = [
