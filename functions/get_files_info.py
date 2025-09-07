@@ -36,10 +36,10 @@ def get_files_info(working_directory, directory="."):
     
 
 
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python get_files_info.py <working_directory> <directory>")
-        print('Example: python get_files_info.py "calculator" "."')
-        sys.exit(1)
-    result = get_files_info(sys.argv[1], sys.argv[2])
-    print(result)
+# if __name__ == "__main__":
+#     if len(sys.argv) < 2:
+#         print("Usage: python get_files_info.py <working_directory> <directory>")
+#         print('Example: python get_files_info.py "calculator" "."')
+#         sys.exit(1)
+#     result = get_files_info(sys.argv[1], sys.argv[2])
+#     print(result)

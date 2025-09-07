@@ -1,21 +1,37 @@
 # tests.py
 # Will run the following function calls on the get_files_info function
 from functions.get_files_info import get_files_info
+from functions.get_file_content import get_file_content
 
 
 def main():
-    test_args = [
+    info_test = [
         ("calculator", ".", "current"),  # Should list contents of current directory
         ("calculator", "pkg", "pkg"),  # Should list contents of pkg directory
-        ("calculator", "/bin", "/bin"),  # Should return error message
-        ("calculator", "../", "../"),  # Should return error message
+        ("calculator", "/bin", "/bin"),  # Should return error string
+        ("calculator", "../", "../"),  # Should return error string
     ]
 
-    for wd, d, label in test_args:
-        print(f"Result for '{label}' directory:")
-        test = get_files_info(wd, d)
-        print(test)
+    content_test = [
+        ("calculator", "main.py"), # Should return content of main.py
+        ("calculator", "pkg/calculator.py"), # Should return content of calculator.py
+        ("calculator", "/bin/cat"),  # Should return error string
+        ("calculator", "pkg/does_not_exist.py")  # Should return error string
+    ]
 
+    ## Testing get_files_info
+    # for wd, d, label in info_test:
+    #     print(f"Result for '{label}' directory:")
+    #     info_test = get_files_info(wd, d)
+    #     print(info_test)
+
+    ## Testing get_file_content
+    test_count = 0
+    for wd, fp in content_test:
+        test_count += 1
+        print(f"Test # {test_count}")
+        content_test = get_file_content(wd, fp)
+        print(content_test)
 
 if __name__ == "__main__":
     main()
