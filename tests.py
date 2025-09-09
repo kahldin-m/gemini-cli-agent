@@ -2,7 +2,7 @@
 # Will run the following function calls on the get_files_info function
 from functions.get_files_info import get_files_info
 from functions.get_file_content import get_file_content
-
+from functions.write_file import write_file # type: ignore
 
 def main():
     info_test = [
@@ -18,6 +18,13 @@ def main():
         ("calculator", "/bin/cat"),  # Should return error string
         ("calculator", "pkg/does_not_exist.py")  # Should return error string
     ]
+    write_test = [
+        ("calculator", "lorem.txt", "wait, this isn't lorem ipsum"),
+        ("calculator", "pkg/morelorem.txt", "lorem ipsum dolor sit amet"),
+        ("calculator", "/tmp/temp.txt", "this should not be allowed")
+    ]
+
+    test_count = 0
 
     ## Testing get_files_info
     # for wd, d, label in info_test:
@@ -26,12 +33,18 @@ def main():
     #     print(info_test)
 
     ## Testing get_file_content
-    test_count = 0
-    for wd, fp in content_test:
+    # for wd, fp in content_test:
+    #     test_count += 1
+    #     print(f"Test # {test_count}")
+    #     content_test = get_file_content(wd, fp)
+    #     print(content_test)
+
+    ## Testing write_file
+    for wd, fp, content in write_test:
         test_count += 1
-        print(f"Test # {test_count}")
-        content_test = get_file_content(wd, fp)
-        print(content_test)
+        print(f'Test # {test_count}')
+        write_test = write_file(wd, fp, content)
+        print(write_test)
 
 if __name__ == "__main__":
     main()
