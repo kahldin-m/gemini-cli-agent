@@ -3,6 +3,7 @@
 from functions.get_files_info import get_files_info
 from functions.get_file_content import get_file_content
 from functions.write_file import write_file # type: ignore
+from functions.run_python_file import run_python_file
 
 def main():
     info_test = [
@@ -23,28 +24,45 @@ def main():
         ("calculator", "pkg/morelorem.txt", "lorem ipsum dolor sit amet"),
         ("calculator", "/tmp/temp.txt", "this should not be allowed")
     ]
+    run_test = [
+        ("calculator", "main.py"),
+        ("calculator", "main.py", ["3 + 5"]),
+        ("calculator", "tests.py"),
+        ("calculator", "../main.py"),
+        ("calculator", "nonexistent.py")
+    ]
 
     test_count = 0
 
     ## Testing get_files_info
     # for wd, d, label in info_test:
     #     print(f"Result for '{label}' directory:")
-    #     info_test = get_files_info(wd, d)
-    #     print(info_test)
+    #     result = get_files_info(wd, d)
+    #     print(result)
 
     ## Testing get_file_content
     # for wd, fp in content_test:
     #     test_count += 1
     #     print(f"Test # {test_count}")
-    #     content_test = get_file_content(wd, fp)
-    #     print(content_test)
+    #     result = get_file_content(wd, fp)
+    #     print(result)
 
     ## Testing write_file
-    for wd, fp, content in write_test:
+    # for wd, fp, content in write_test:
+    #     test_count += 1
+    #     print(f'Test # {test_count}')
+    #     result = write_file(wd, fp, content)
+    #     print(result)
+
+    ## Testing run_python_file
+    for wd, fp, *args in run_test:
         test_count += 1
         print(f'Test # {test_count}')
-        write_test = write_file(wd, fp, content)
-        print(write_test)
+        if args:
+            result = run_python_file(wd, fp, *args[0])
+        else:
+            result = run_python_file(wd, fp)
+        print(result)
 
 if __name__ == "__main__":
     main()
