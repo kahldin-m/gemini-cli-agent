@@ -1,5 +1,6 @@
 import os
 import sys
+from functions.config import system_prompt
 from google import genai
 from google.genai import types # type: ignore
 from dotenv import load_dotenv # type: ignore
@@ -22,7 +23,8 @@ def main():
 
     response = client.models.generate_content(
         model='gemini-2.0-flash-001',
-        contents=messages
+        contents=messages,
+        config=types.GenerateContentConfig(system_instruction=system_prompt)
     )
     print(response.text)
     if "--verbose" in args:
