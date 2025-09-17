@@ -1,6 +1,9 @@
+# main.py
 import os
 import sys
-from functions.config import system_prompt
+import call_function # type: ignore
+from functions.config import system_prompt # type: ignore
+from functions.get_files_info import schema_get_files_info, available_functions # type: ignore
 from google import genai
 from google.genai import types # type: ignore
 from dotenv import load_dotenv # type: ignore
@@ -24,9 +27,25 @@ def main():
     response = client.models.generate_content(
         model='gemini-2.0-flash-001',
         contents=messages,
-        config=types.GenerateContentConfig(system_instruction=system_prompt)
+        config=types.GenerateContentConfig(
+            tools=[available_functions], system_instruction=system_prompt
+        )
     )
-    print(response.text)
+    if response.function_calls:
+        for i, call in enumerate(response.function_calls, start=1):
+            # print(f"Call function #{i}: {call.name}({call.args})")
+            call_result = call_function.call_function(call, verbose="--verbose" in args)
+
+            call_response = call_result.parts[0].function_response.response
+            if not call_response:
+                raise Exception("Fatal exception: No response from function call.")
+            else:
+                if "--verbose" in args:
+                    print(f"-> {call_response}")
+                else:
+                    print(f"{call_response['result']}")
+    else:
+        print(response.text)
     if "--verbose" in args:
         print(f"User prompt: {user_prompt}")
         print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
