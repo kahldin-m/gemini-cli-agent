@@ -42,8 +42,7 @@ def call_function(function_call_part, verbose=False):
     # Call the function and get the result
     function_result = FUNCTIONS[function_name](**function_args)
 
-    if verbose:
-        print(f"Calling function: {function_name}({function_args})")
+    print(f" - Calling function: {function_name}") # ({function_args})
 
     return types.Content(
         role="tool",
